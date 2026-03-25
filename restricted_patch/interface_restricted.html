@@ -1085,6 +1085,7 @@
           <option value="NONE">NONE</option>
         </select>
         </p>
+        <p>Put categorical labels on plot: <input type="checkbox" id="EMBEDOnData"/>On Data</p>
         <p>Select the embedding layout:
         <select id="EMBEDlayout">
         </select> the number of plots per row:
@@ -5415,6 +5416,7 @@ function EMBEDplot(){
             'grpNum':grpMeta,
             'ncol':$('#EMBEDslot').val(),
             'layout':$("#EMBEDlayout").val(),
+            'lgdOnData':$("#EMBEDOnData").prop('checked'),
             //'abb':window.bioAbbr,
             'figOpt':window.figOpt};
   if($("#EMBEDsplit").val()!="NONE" && genes.length>0){

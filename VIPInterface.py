@@ -1040,6 +1040,7 @@ def EMBED(data):
   ngrp = len(data['grp'])
   ngrpNum = len(data['grpNum'])
   ngene = len(data['genes'])
+  lgdOnData = bool(data['lgdOnData'])
   nrow = ngrp+math.ceil(ngrpNum/ncol)+math.ceil(ngene/ncol)
   if 'splitGrp' in data.keys():
     splitName = list(adata.obs[data['splitGrp']].unique())
@@ -1061,7 +1062,10 @@ def EMBED(data):
       plotOrder = min(grpName,key=grpName.get) #list(grpPalette.keys()) #
       grpPalette = [grpPalette[k] for k in list(adata.obs[data['grp'][i]].cat.categories)]
       dotSize = adata.obs.apply(lambda x: 360000/adata.shape[1] if x['HIVcell']==plotOrder else 120000/adata.shape[1],axis=1).tolist()
-    ax = sc.pl.embedding(adata,data['layout'],color=data['grp'][i],ax=fig.add_subplot(gs[i,0]),show=False,palette=grpPalette,groups=plotOrder,size=dotSize)
+    legendLocation = 'right margin'
+    if lgdOnData:
+      legendLocation = 'on data'
+    ax = sc.pl.embedding(adata,data['layout'],color=data['grp'][i],ax=fig.add_subplot(gs[i,0]),show=False,palette=grpPalette,groups=plotOrder,size=dotSize,legendLoc=legendLocation)
     if grpCol[data['grp'][i]]>1:
       ax.legend(ncol=grpCol[data['grp'][i]],loc=6,bbox_to_anchor=(1,0.5),frameon=False)
     ax.set_xlabel('%s1'%data['layout'])
